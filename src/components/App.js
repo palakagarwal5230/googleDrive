@@ -1,39 +1,36 @@
 import React from "react";
-import Signup from "./Signup";
-import { Container } from "react-bootstrap";
+import Signup from "./authentication/Signup";
 import { AuthProvider } from "../contexts/AuthContext";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Dashboard from "./Dashboard";
-import Login from "./Login";
-import ForgotPassword from "./ForgotPassword";
-import UpdateProfile from "./UpdateProfile";
-// import PrivateRoute from "./PrivateRoute";
+import Profile from "./Profile";
+import Login from "./authentication/Login";
+import ForgotPassword from "./authentication/ForgotPassword";
+import UpdateProfile from "./authentication/UpdateProfile";
+import Dashboard from "./google-drive/Dashboard";
+// import PrivateRoute from "./authentication/PrivateRoute";
 
 function App() {
   return (
-    
-    <Container className="d-flex align-items-center justify-content-center"
-    style={{ minHeight: "100vh" }}>
-      <div className="w-100" style={{ maxWidth: "400px" }}>
-        <Router>
-          <AuthProvider>
-            <Routes>
-              <Route path="/signup" Component={Signup} />
-              <Route path="/update-profile" Component={UpdateProfile} />
-              <Route path="/login" Component={Login} />
-              <Route exact path="/" Component={Dashboard}/>
-              <Route path="forgot-password" Component={ForgotPassword} />
-            </Routes>
-          </AuthProvider>
-        </Router>
-        {/* <Signup/> */}
-      </div>
+    <Router>
+      <AuthProvider>
+        <Routes>
+          {/* Drive  */}
+          <Route exact path="/" Component={Dashboard} />
+          <Route exact path="/folder/:folderId" Component={Dashboard} />
 
-      
-    </Container>
-    
-  ) 
-  
+
+          {/* Profile */}
+          <Route exact path="/user" Component={Profile} />
+          <Route path="/update-profile" Component={UpdateProfile} />
+
+          {/* Auth  */}
+          <Route path="/signup" Component={Signup} />
+          <Route path="/login" Component={Login} />
+          <Route path="forgot-password" Component={ForgotPassword} />
+        </Routes>
+      </AuthProvider>
+    </Router>
+  );
 }
 
 export default App;
